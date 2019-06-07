@@ -14,3 +14,56 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+/** Toogle Menu **/
+.ftc-header-degrade{
+    background: linear-gradient(90deg, #00600f 0%, #d9ff9f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    color: white;
+    font-size: 20px;
+}
+
+.ftc-menu-item {
+    color: #00600f;
+    font-weight: bold;
+}
+
+.ftc-menu-item div{
+    border: 0px !important;
+}
+
+.ftc-circle-pic{
+    background: white;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/***************************************************/
+.content{
+    background: #d9ff9f;
+}
+
+.ftc-panel{
+    background: white;
+    -webkit-border-radius: 2%;
+    border-radius: 2%;
+    padding: 30px 30px 30px 30px;
+}
+
+.ftc-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ftc-button-center{
+    padding: 10px 0px 10px 10px;
+    margin: 0px 0px 0px 5px;
+}
+
+.ftc-info-color{
+    color: #00600f !important;
+}
+
+.ftc-error-color{
+    color: red !important;
+}

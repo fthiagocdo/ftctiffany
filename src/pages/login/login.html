@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div padding class="ftc-panel">
+    <ion-img src="/assets/imgs/logo.png" class="ftc-logo ftc-center"></ion-img>
+    <button ion-button icon-start full class="ftc-button-login" color="facebook" (click)="loginFacebook()">
+      <ion-icon name="logo-facebook"></ion-icon>
+      Facebook
+    </button>
+    <button ion-button icon-start full class="ftc-button-login" color="google" (click)="loginGoogle()">
+      <ion-icon name="logo-googleplus"></ion-icon>
+      Google
+    </button>
+    <button ion-button icon-start full class="ftc-button-login" color="primary" (click)="goToHome()">
+      <ion-icon name="log-in"></ion-icon>
+      Acesso Sem Login
+    </button>
+  </div>
+</ion-content>
