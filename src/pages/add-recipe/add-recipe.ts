@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { RecipeService } from '../../providers/recipe-service/recipe-service';
-import { ImagePicker } from '@ionic-native/image-picker';
-
-/**
- * Generated class for the AddRecipePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, Platform, ModalController } from 'ionic-angular';
+import { ImageProvider } from '../../providers/image/image';
+import { PreloaderProvider } from '../../providers/preloader/preloader';
+import { DatabaseProvider } from '../../providers/database/database';
+import * as firebase from 'firebase';
+import 'rxjs/Rx';
 
 @IonicPage()
 @Component({
@@ -16,77 +12,87 @@ import { ImagePicker } from '@ionic-native/image-picker';
   templateUrl: 'add-recipe.html',
 })
 export class AddRecipePage {
-  recipeName: string;
-  recipeKey: string;
-  imgPath: string;
-  fileToUpload: any;
+   private auth     : any;
+   public movies    : any;
+   private email    : string = 'ftcdevsolutions@gmail.com';
+   private pass     : string = '34D&WDco%T';
 
-  constructor(private navCtrl: NavController,
-    private navParams: NavParams,
-    private recipeService: RecipeService,
-    private imagePicker: ImagePicker) {
 
-    this.recipeKey = null;
-    this.recipeName = '';
+   constructor( public navCtrl       : NavController,
+                private platform     : Platform,
+                private modalCtrl    : ModalController,
+                private _IMG         : ImageProvider,
+                private _LOADER      : PreloaderProvider,
+                private _DB          : DatabaseProvider)
+   {
+   }
 
-    if (this.navParams.data.recipe) {
-      this.recipeName = this.navParams.data.recipe.name;
-      this.recipeKey = this.navParams.data.recipe.$key;
-    }
-  }
 
-  save() {
-    this.recipeService.uploadAndSave({
-      name: this.recipeName,
-      key: this.recipeKey,
-      fileToUpload: this.fileToUpload
-    });
-    this.navCtrl.pop();
-  }
-
-  escolherFoto() {
-    this.imagePicker.hasReadPermission()
-      .then(hasPermission => {
-        if (hasPermission) {
-          this.pegarImagem();
-        } else {
-          this.solicitarPermissao();
-        }
-      }).catch(error => {
-        console.error('Erro ao verificar permissão', error);
+   ionViewDidEnter()
+   {
+      this._LOADER.displayPreloader();
+      this.platform.ready()
+      .then(() =>
+      {
+         /*firebase.auth().signInWithEmailAndPassword(this.email, this.pass)
+         .then((credentials) =>
+         {*/
+            this.loadAndParseMovies();
+         /*})
+         .catch((err : Error) =>
+         {
+            console.log(err.message);
+         });*/
       });
-  }
+   }
 
-  solicitarPermissao() {
-    this.imagePicker.requestReadPermission()
-      .then(hasPermission => {
-        if (hasPermission) {
-          this.pegarImagem();
-        } else {
-          console.error('Permissão negada');
-        }
-      }).catch(error => {
-        console.error('Erro ao solicitar permissão', error);
-      });
-  }
 
-  pegarImagem() {
-    this.imagePicker.getPictures({
-      maximumImagesCount: 1, //Apenas uma imagem
-      outputType: 1 //BASE 64
-    })
-      .then(results => {
-        if (results.length > 0) {
-          this.imgPath = 'data:image/png;base64,' + results[0];
-          this.fileToUpload = results[0];
-        } else {
-          this.imgPath = '';
-          this.fileToUpload = null;
-        }
-      })
-      .catch(error => {
-        console.error('Erro ao recuperar a imagem', error);
+   loadAndParseMovies()
+   {
+      this.movies = this._DB.renderMovies();
+      this._LOADER.hidePreloader();
+   }
+
+
+   addRecord()
+   {
+      let modal = this.modalCtrl.create('Modals');
+      modal.onDidDismiss((data) =>
+      {
+         if(data)
+         {
+            this.loadAndParseMovies();
+         }
       });
-  }
+      modal.present();
+   }
+
+
+   editMovie(movie)
+   {
+      let params = { movie: movie, isEdited: true },
+          modal  = this.modalCtrl.create('Modals', params);
+
+      modal.onDidDismiss((data) =>
+      {
+         if(data)
+         {
+            this.loadAndParseMovies();
+         }
+      });
+      modal.present();
+   }
+
+
+
+   deleteMovie(movie)
+   {
+      this._DB.deleteMovie(movie.id)
+      .then((data) =>
+      {
+         this.loadAndParseMovies();
+      });
+   }
+
 
 }

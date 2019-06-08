@@ -1,72 +1,45 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { FirebaseApp } from 'angularfire2';
-import * as firebase from 'firebase';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 
 @Injectable()
 export class RecipeService {
 
-  items: FirebaseListObservable<any[]>;
+  constructor(private database: AngularFireDatabase, private storage: AngularFireStorage) { }
 
-  constructor(private db: AngularFireDatabase, private angularFireAuth: AngularFireAuth, private fb: FirebaseApp) {
-    let path = '/recipes/' ;//+ this.angularFireAuth.auth.currentUser.uid;
-    this.items = db.list(path, {
-      query: {
-        orderByChild: 'name'
-        //, equalTo: 'A' para fazer query com valor igual a "A"
-      }
+  getFiles() {
+    let ref = this.database.list('files');
+ 
+    return ref.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
   }
-
-  public getAll() {
-    return this.items;
+ 
+  uploadToStorage(information): AngularFireUploadTask {
+    let newName = `${new Date().getTime()}.txt`;
+ 
+    return this.storage.ref('files/${newName}').putString(information);
   }
-
-  private save(item: any) {
-    if (item.$key) {
-      return this.items.update(item.$key, { name: item.name });
-    } else {
-      return this.items.push({ name: item.name, url: item.url, fullPath: item.fullPath });
+ 
+  storeInfoToDatabase(metainfo) {
+    let toSave = {
+      created: metainfo.timeCreated,
+      url: metainfo.downloadURLs[0],
+      fullPath: metainfo.fullPath,
+      contentType: metainfo.contentType
     }
+    return this.database.list('files').push(toSave);
+  }
+ 
+ 
+  deleteFile(file) {
+    let key = file.key;
+    let storagePath = file.fullPath;
+ 
+    let ref = this.database.list('files');
+ 
+    ref.remove(key);
+    return this.storage.ref(storagePath).delete();
   }
 
-  public uploadAndSave(item: any) {
-    let recipe = { $key: item.key, name: item.name, url: '', fullPath: '' };
-
-    if (recipe.$key) {
-      this.save(recipe);
-    } else {
-      let storageRef = this.fb.storage().ref();
-      let basePath = '/recipes/' + this.angularFireAuth.auth.currentUser.uid;
-      recipe.fullPath = basePath + '/' + recipe.name + '.jpg';
-      let uploadTask = storageRef.child(recipe.fullPath).putString(item.fileToUpload, 'base64');
-
-      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-      (snapshot) => {
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress + "% done");
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => {
-        recipe.url = uploadTask.snapshot.downloadURL;
-        this.save(recipe);
-      });
-    }
-  }
-
-  public remove(item: any) {
-    return this.items.remove(item.$key)
-      .then(() => {
-        this.removeFile(item.fullPath)
-      });
-  }
-
-  public removeFile(fullPath: string) {
-    let storageRef = this.fb.storage().ref();
-    storageRef.child(fullPath).delete();
-  }
 }
