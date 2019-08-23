@@ -10,15 +10,20 @@ export class PreloaderProvider {
    constructor(public loadingCtrl : LoadingController) { }
 
    displayPreloader() : void {
-      this.loading = this.loadingCtrl.create({
-         content: 'Please wait...'
-      });
-
-      this.loading.present();
+      if(this.loading == null){
+         this.loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+         });
+   
+         this.loading.present();
+      }
    }
 
    hidePreloader() : void {
-      this.loading.dismiss();
+      if(this.loading != null){
+         this.loading.dismiss();
+         this.loading = null;
+      }
    }
 
 }

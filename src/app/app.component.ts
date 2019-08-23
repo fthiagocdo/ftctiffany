@@ -5,10 +5,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { FeaturedRecipesPage } from '../pages/featured-recipes/featured-recipes';
-import { AddRecipePage } from '../pages/add-recipe/add-recipe';
-import { ModalsPage } from '../pages/modals/modals';
+import { FavoriteRecipesPage } from '../pages/favorite-recipes/favorite-recipes';
 
 import * as firebase from 'firebase';
+import { PreloaderProvider } from '../providers/preloader/preloader';
+import { AuthService } from '../providers/auth/auth-service';
+import { Utils } from '../providers/utils/utils';
+import { ImageLoaderConfig } from 'ionic-image-loader';
+import { MyRecipesPage } from '../pages/my-recipes/my-recipes';
+import { SearchRecipePage } from '../pages/search-recipe/search-recipe';
+import { DatabaseProvider } from '../providers/database/database';
+import { CategoryProvider } from '../providers/category/category';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDSV0S6hd_L1cZxQYggB6XNSS-MSkcNqHc",
@@ -17,7 +24,7 @@ export const firebaseConfig = {
   projectId: "projeto-tiffany",
   storageBucket: "projeto-tiffany.appspot.com",
   messagingSenderId: "249520959531",
-  appId: "1:249520959531:web:333829adc8d28a4f"
+  appId: "1:249520959531:web:86616bdd99cb73aa"
 };
 
 @Component({
@@ -26,35 +33,92 @@ export const firebaseConfig = {
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ModalsPage;
+  private rootPage: any = LoginPage;
+  private pagesGuest: Array<{title: string, icon: string, component: any}>;
+  private pagesUser: Array<{title: string, icon: string, component: any}>;
+  private email = 'tiffanydatabase@mail.com';
+  private password = 'FrbS@197569';
+  private currentUser: any;
+  
+  constructor(
+    private PLATFORM: Platform, 
+    private STATUSBAR: StatusBar, 
+    private SPLASHSCREEN: SplashScreen,
+    private AUTH : AuthService, 
+    private LOADER: PreloaderProvider,
+    private IMGLOADERCONFIG: ImageLoaderConfig,
+    private UTILS: Utils,
+    private DB: DatabaseProvider,
+    private CATEGORY: CategoryProvider,
+    ) {
+    
+      this.initializeApp();
 
-  pages: Array<{title: string, component: any}>;
+      this.AUTH.activeUser.subscribe((_user)=>{
+        this.currentUser = _user;
+      });
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
+      
+  }
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Receitas em destaque', component: FeaturedRecipesPage },
-      { title: 'Adiconar receita', component: AddRecipePage },
+  loadData() {
+    let _class = this;
+
+    this.DB.getCategories()
+      .then(success => {
+        _class.CATEGORY.set(success);
+      }, err => {
+        console.log(err.message);
+        _class.UTILS.showMessage('Não foi possível se conectar ao banco de dados. Por favor, tente novamente mais tarde...', 'error');
+      });
+    this.pagesGuest = [
+      { title: 'Procurar receitas', icon: 'search', component: SearchRecipePage },
+      { title: 'Receitas em destaque', icon: 'star', component: FeaturedRecipesPage  },
+      { title: 'Login', icon: 'log-in', component: LoginPage  }
     ];
-
+    this.pagesUser = [
+      { title: 'Procurar receitas', icon: 'search', component: SearchRecipePage },
+      { title: 'Receitas favoritas', icon: 'heart', component: FavoriteRecipesPage },
+      { title: 'Minhas receitas', icon: 'list-box', component: MyRecipesPage },
+      { title: 'Receitas em destaque', icon: 'star', component: FeaturedRecipesPage },
+      { title: 'Sair', icon: 'log-out', component: LoginPage  }
+    ];
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+    this.PLATFORM.ready().then(() => {
+      this.STATUSBAR.backgroundColorByHexString('#cf1717');
+      this.SPLASHSCREEN.hide();
+      this.IMGLOADERCONFIG.enableSpinner(true);
+      this.IMGLOADERCONFIG.useImageTag(true);
+      this.IMGLOADERCONFIG.setFallbackUrl('assets/imgs/recipe_loading.jpg');
 
-    firebase.initializeApp(firebaseConfig);
+      this.connectToDatabase();
+    });
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.title == 'Sair'){
+      this.AUTH.doLogout();
+      this.connectToDatabase();
+      this.nav.setRoot(LoginPage);
+    }else{
+      this.LOADER.displayPreloader();
+      this.nav.setRoot(page.component);
+    }
+  }
+
+  connectToDatabase() {
+    let _class = this;
+    this.LOADER.displayPreloader();
+    firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+      .then((credentials) => {
+        this.loadData();
+        _class.LOADER.hidePreloader();
+      }).catch((err) => {
+        console.log(err.message);
+        _class.UTILS.showMessage('Não foi possível se conectar ao banco de dados. Por favor, tente novamente mais tarde...', 'error');
+        _class.LOADER.hidePreloader();
+      });
   }
 }

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Procurar receita</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div padding class="ftc-panel">
+    <ion-item padding-right>
+      <ion-label stacked class="ftc-primary-color"><b>Palavras chaves</b></ion-label>
+      <ion-textarea rows="3" [(ngModel)]="ingredientsString" disabled="true" placeholder="Aqui você pode informar o nome e/ou os principais ingredientes da receita."></ion-textarea>
+      <button ion-button clear class="ftc-expand-button-textarea" type="button" item-right (click)="openModal('ingredientes')">
+        <ion-icon name="open"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item class="ftc-checkbox" *ngIf="moreFilters">
+     <ion-label>Possui pré-preparo?</ion-label>
+     <ion-checkbox [(ngModel)]="pre"></ion-checkbox>
+    </ion-item>
+
+    <ion-item padding-right *ngIf="moreFilters">
+      <ion-label stacked class="ftc-primary-color"><b>Tempo máximo de preparo</b></ion-label>
+      <ion-input [(ngModel)]="recipeDuration" disabled="true"></ion-input>
+      <button ion-button clear class="ftc-expand-button-input" type="button" item-right (click)="openModal('tempo máximo de preparo')">
+        <ion-icon name="open"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item padding-right padding-bottom *ngIf="moreFilters">
+      <ion-label stacked class="ftc-primary-color"><b>Categorias *</b></ion-label>
+      <ion-input [(ngModel)]="categoriesString" disabled="true"></ion-input>
+      <button ion-button clear class="ftc-expand-button-input" type="button" item-right (click)="openModal('categorias')">
+        <ion-icon name="open" ></ion-icon>
+      </button>  
+    </ion-item>
+
+    <div style="text-align: center;">
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small (click)="showMoreFilters()">
+            <ion-icon name="{{ moreFiltersIcon }}"></ion-icon>
+            <div>{{ moreFiltersLabel }}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+         <button ion-button icon-start clear small (click)="search()">
+           <ion-icon name="search"></ion-icon>
+           <div>Consultar</div>
+         </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
+

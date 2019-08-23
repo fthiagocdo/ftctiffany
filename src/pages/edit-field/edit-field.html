@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Editar {{ fieldName.toLowerCase() }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div padding class="ftc-panel">
+    <ion-item *ngIf="fieldType == 'image'">
+      <input type="hidden" name="image" [(ngModel)]="fieldValue">
+      <img [src]="fieldValue">
+      <button ion-button full (click)="selectImage()">Escolha uma imagem</button>
+    </ion-item>
+
+    <ion-item padding-right padding-bottom *ngIf="fieldType == 'input-text'">
+      <ion-input type="text" [(ngModel)]="fieldValue"></ion-input>
+    </ion-item>
+
+    <ion-item padding-right padding-bottom *ngIf="fieldType == 'input-textarea'">
+      <ion-textarea rows="20" [(ngModel)]="fieldValue"></ion-textarea>
+    </ion-item>
+
+    <ion-item padding-right padding-bottom *ngIf="fieldType == 'input-time'">
+      <ion-input type="tel" pattern="[0-9]*" min="0" [(ngModel)]="fieldValueTimeHour"></ion-input>
+      <ion-input type="text" value="hora(s) e" readonly="true" class="ftc-input"></ion-input>
+      <ion-input type="tel" pattern="[0-9]*" min="0" max="59" [(ngModel)]="fieldValueTimeMinute"></ion-input>
+      <ion-input type="text" value="minuto(s)" readonly="true" class="ftc-input"></ion-input>
+    </ion-item>
+
+    <ion-item padding-right padding-bottom *ngIf="fieldType == 'input-ingredient'">
+      <ion-input type="text" [(ngModel)]="fieldValueIngredient" class="ftc-input"></ion-input>
+      <button ion-button clear large type="button" item-right (click)="addIngredient()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-list *ngIf="fieldType == 'input-ingredient'">
+      <ion-item *ngFor="let item of fieldValue">
+        {{ item }}
+        <button ion-button clear large type="button" item-right (click)="openConfirmDelete(item)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="fieldType == 'input-category'">
+      <ion-item class="ftc-checkbox" *ngFor="let item of categories">
+        <ion-label>{{ item.name }}</ion-label>
+        <ion-checkbox (click)="addCategory(item.code)" [checked]="checkCategory(item.code)"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <div style="text-align: center;">
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small (click)="cancel(item)">
+            <ion-icon name="close"></ion-icon>
+            <div>Cancelar</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-start clear small (click)="confirm()">
+            <ion-icon name="checkmark"></ion-icon>
+            <div>Confirmar</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
+  
+  

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ModalsPage } from './modals';
+import { EditFieldPage } from './edit-field';
 
 @NgModule({
   declarations: [
-    ModalsPage,
+    EditFieldPage,
   ],
   imports: [
-    IonicPageModule.forChild(ModalsPage),
+    IonicPageModule.forChild(EditFieldPage),
   ],
 })
-export class ModalsPageModule {}
+export class EditFieldPageModule {}

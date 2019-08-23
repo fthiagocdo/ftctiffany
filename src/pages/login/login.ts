@@ -1,19 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { FeaturedRecipesPage } from '../featured-recipes/featured-recipes';
-import { AddRecipePage } from '../add-recipe/add-recipe';
 import { AuthService } from '../../providers/auth/auth-service';
 import { Utils } from '../../providers/utils/utils';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Facebook } from '@ionic-native/facebook';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { PreloaderProvider } from '../../providers/preloader/preloader';
 
 @IonicPage()
 @Component({
@@ -21,34 +15,30 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  private currentUser: any;
 
-  currentUser: any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public angularFireAuth: AngularFireAuth, 
-    public googleplus: GooglePlus, public platform: Platform, public auth : AuthService, 
-    public loadingCtrl: LoadingController, public utils: Utils) {
-      this.auth.activeUser.subscribe((_user)=>{
+  constructor(
+    private NAVCTRL: NavController,  
+    private ANGFIREAUTH: AngularFireAuth, 
+    private GOOGLEPLUS: GooglePlus, 
+    private FACEBOOK: Facebook,
+    private PLATFORM: Platform,
+    private AUTH : AuthService, 
+    private UTILS: Utils, 
+    private LOADER: PreloaderProvider) {
+      this.AUTH.activeUser.subscribe((_user)=>{
         this.currentUser = _user;
       });
   }
 
   ionViewDidLoad() {
-    let loading = this.navParams.get('loading');
-    if(loading != null){
-      loading.dismiss();
-    }else{
-      let loading = this.loadingCtrl.create({
-        content: 'Please wait...'
-      });
-      loading.present();
-      setTimeout(() => {
-        loading.dismiss()
-       }, 5000);
-    }
-  }
+    this.LOADER.hidePreloader();
+   }
 
   loginGoogle() {
-    if(this.platform.is('cordova')){
+    this.LOADER.displayPreloader();
+
+    if(this.PLATFORM.is('cordova')){
       this.nativeGoogleLogin();
     }else{
       this.webGoogleLogin();
@@ -56,69 +46,72 @@ export class LoginPage {
   }
 
   webGoogleLogin() {
-    let currentUser = this.currentUser;
-    let utils = this.utils;
-    let navCtrl = this.navCtrl;
-    let auth = this.auth;
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-    loading.present();
+    let _class = this;
 
     const provider = new firebase.auth.GoogleAuthProvider();
-    this.angularFireAuth.auth.signInWithPopup(provider)
+    this.ANGFIREAUTH.auth.signInWithPopup(provider)
       .then(function (credential) {
-        currentUser.uid = credential.user.uid;
-        currentUser.email = credential.user.email;
-        currentUser.name = credential.user.displayName;
-        currentUser.photo = credential.user.photoURL;
+        _class.currentUser.uid = credential.user.uid;
+        _class.currentUser.email = credential.user.email;
+        _class.currentUser.name = credential.user.displayName;
+        _class.currentUser.photo = credential.user.photoURL;
         
-        auth.doLogin(currentUser);
-        navCtrl.setRoot(FeaturedRecipesPage, {'loading': loading}); 
+        _class.AUTH.doLogin(_class.currentUser);
+        _class.NAVCTRL.setRoot(FeaturedRecipesPage); 
     }, function (err) {
-      loading.dismiss();
-      utils.showMessage(err, 'error');
+      this.LOADER.hidePreloader();
+      this.utils.showMessage(err.message, 'error');
     });
   }
 
   nativeGoogleLogin() {
-    let currentUser = this.currentUser;
-    let utils = this.utils;
-    let navCtrl = this.navCtrl;
-    let auth = this.auth;
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-    loading.present();
-     
-    this.googleplus.login({
+    let _class = this;
+
+    this.GOOGLEPLUS.login({
       'webClientId': '249520959531-h580q4omeu08opge66ivvpkm4kscuiq7.apps.googleusercontent.com'
     })
       .then( res => {
         const googleCredential = firebase.auth.GoogleAuthProvider.credential(res.idToken);
         firebase.auth().signInWithCredential(googleCredential)
           .then( userCredential => {
-            currentUser.uid = userCredential.uid;
-            currentUser.email = userCredential.email;
-            currentUser.name = userCredential.displayName;
-            currentUser.photo = userCredential.photoURL;
+            _class.currentUser.uid = userCredential.uid;
+            _class.currentUser.email = userCredential.email;
+            _class.currentUser.name = userCredential.displayName;
+            _class.currentUser.photo = userCredential.photoURL;
                   
-            auth.doLogin(currentUser);
-            navCtrl.setRoot(FeaturedRecipesPage, {'loading': loading}); 
+            _class.AUTH.doLogin(_class.currentUser);
+            _class.NAVCTRL.setRoot(FeaturedRecipesPage); 
       });
     }, err => {
-      loading.dismiss();
-      utils.showMessage(err, 'error');
+      this.LOADER.hidePreloader();
+      this.UTILS.showMessage(err.message, 'error');
     });
   }
 
-  goToHome() {
-    /*let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-    loading.present();
+  loginFacebook() {
+    this.LOADER.displayPreloader();
+    let _class = this;
     
-    this.navCtrl.setRoot(FeaturedRecipesPage, {'loading': loading});*/
-    this.navCtrl.setRoot(AddRecipePage);
+    this.FACEBOOK.login(['email'])
+      .then( res => {
+        const facebookCredential = firebase.auth.FacebookAuthProvider
+          .credential(res.authResponse.accessToken);
+        firebase.auth().signInWithCredential(facebookCredential)
+          .then( user => { 
+            _class.currentUser.uid = user.uid;
+            _class.currentUser.email = user.email;
+            _class.currentUser.name = user.displayName;
+            _class.currentUser.photo = user.photoURL+'?height=256&width=256';
+
+            _class.AUTH.doLogin(_class.currentUser);
+            _class.NAVCTRL.setRoot(FeaturedRecipesPage);
+      }, err => {
+        this.LOADER.hidePreloader();
+        this.UTILS.showMessage(err.message, 'error');
+      });
+    }, err => {
+      this.LOADER.hidePreloader();
+      this.UTILS.showMessage(err.message, 'error');
+    });
   }
 }

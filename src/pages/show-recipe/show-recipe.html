@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Ver receita</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img-loader src="{{ photo }}"></img-loader>
+    <ion-card-content>
+      <ion-card-title>
+        <b class="ftc-primary-color">{{ name }}</b>
+        <div class="ftc-divider"></div>
+      </ion-card-title>
+      <p><b>Ingredientes:</b></p>
+      <p *ngFor="let item of ingredients">{{ item }}</p>
+      <div class="ftc-divider-item"></div>
+      <p><b>- Preparo -</b></p>
+      <p><b>Tempo:</b> {{ recipeDuration }}</p>
+      <p><b>Instruções:</b></p>
+      <div [innerHTML]="recipeInstructions"></div>
+      <div class="ftc-divider-item"></div>
+      <p><b>Rendimento:</b> {{ portions }}</p>
+      <p><b>Categorias: </b>{{ UTILS.buildStringCategories(categories) }}</p>
+    </ion-card-content>
+    <div style="text-align: center;">
+      <ng-template [ngIf]="!UTILS.isEmpty(favoriteRecipeId)" [ngIfElse]="notFavorite">
+        <button ion-button icon-start clear small (click)="deleteFromFavorites()">
+          <ion-icon name="heart"></ion-icon>
+          <div>Remover favoritos</div>
+        </button>
+      </ng-template>
+      <ng-template #notFavorite>
+        <button ion-button icon-start clear small (click)="addToFavorites()">
+          <ion-icon name="heart-outline"></ion-icon>
+          <div>Adicionar favoritos</div>
+        </button>
+      </ng-template>
+    </div>
+ </ion-card>
+</ion-content>
+

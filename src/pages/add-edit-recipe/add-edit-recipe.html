@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ pageTitle }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div padding class="ftc-panel">
+    <ion-fab right padding-right>
+      <button ion-fab mini (click)="openModal('imagem')">
+        <ion-icon name="open"></ion-icon>
+      </button>
+    </ion-fab>  
+    <ion-img class="ftc-center ftc-image" src="{{ photo }}"></ion-img>
+
+    <div class="ftc-divider" margin-top></div>
+    
+    <ion-item padding-right>
+      <ion-label stacked class="ftc-primary-color"><b>Nome da receita *</b></ion-label>
+      <ion-input [(ngModel)]="name" disabled="true"></ion-input>
+      <button ion-button clear margin-bottom class="ftc-expand-button-input" type="button" item-right (click)="openModal('nome')">
+        <ion-icon name="open"></ion-icon>
+      </button>
+     </ion-item>
+
+    <ion-item padding-right>
+     <ion-label stacked class="ftc-primary-color"><b>Breve descrição da receita</b></ion-label>
+     <ion-input [(ngModel)]="description" disabled="true"></ion-input>
+     <button ion-button clear margin-bottom class="ftc-expand-button-input" type="button" item-right (click)="openModal('descrição')">
+       <ion-icon name="open"></ion-icon>
+     </button>
+    </ion-item>
+
+    <ion-item padding-right>
+      <ion-label stacked class="ftc-primary-color"><b>Ingredientes *</b></ion-label>
+      <ion-textarea rows="3" [(ngModel)]="ingredientsString" disabled="true"></ion-textarea>
+      <button ion-button clear class="ftc-expand-button-textarea" type="button" item-right (click)="openModal('ingredientes')">
+        <ion-icon name="open"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item class="ftc-checkbox">
+     <ion-label>Esta receita possui pré-preparo?</ion-label>
+     <ion-checkbox [(ngModel)]="pre"></ion-checkbox>
+    </ion-item>
+
+    <ion-item padding-right>
+      <ion-label stacked class="ftc-primary-color"><b>Tempo de preparo *</b></ion-label>
+      <ion-input [(ngModel)]="recipeDuration" disabled="true"></ion-input>
+      <button ion-button clear class="ftc-expand-button-input" type="button" item-right (click)="openModal('tempo de preparo')">
+        <ion-icon name="open"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item padding-right>
+      <ion-label stacked class="ftc-primary-color"><b>Instruções de preparo *</b></ion-label>
+      <ion-textarea rows="3" [(ngModel)]="recipeInstructions" disabled="true"></ion-textarea>
+      <button ion-button clear class="ftc-expand-button-textarea" type="button" item-right (click)="openModal('instruções de preparo')">
+        <ion-icon name="open" ></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item padding-right>
+      <ion-label stacked class="ftc-primary-color"><b>Rendimento:</b></ion-label>
+      <ion-input [(ngModel)]="portions" disabled="true"></ion-input>
+      <button ion-button clear margin-bottom class="ftc-expand-button-input" type="button" item-right (click)="openModal('rendimento')">
+        <ion-icon name="open"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item padding-right padding-bottom>
+      <ion-label stacked class="ftc-primary-color"><b>Categorias *</b></ion-label>
+      <ion-input [(ngModel)]="categoriesString" disabled="true"></ion-input>
+      <button ion-button clear class="ftc-expand-button-input" type="button" item-right (click)="openModal('categorias')">
+        <ion-icon name="open" ></ion-icon>
+      </button>  
+    </ion-item>
+
+    <div style="text-align: center;">
+     <ion-row>
+       <ion-col>
+         <button ion-button icon-start clear small (click)="confirm()">
+           <ion-icon name="checkmark"></ion-icon>
+           <div>Confirmar</div>
+         </button>
+       </ion-col>
+     </ion-row>
+    </div>
+  </div>
+</ion-content>
+

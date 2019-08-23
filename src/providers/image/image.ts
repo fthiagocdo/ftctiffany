@@ -16,10 +16,11 @@ export class ImageProvider {
              sourceType         : this._CAMERA.PictureSourceType.PHOTOLIBRARY,
              destinationType    : this._CAMERA.DestinationType.DATA_URL,
              quality            : 100,
-             targetWidth        : 320,
-             targetHeight       : 240,
+             targetWidth        : 640,
+             targetHeight       : 480,
              encodingType       : this._CAMERA.EncodingType.JPEG,
-             correctOrientation : true
+             correctOrientation : true,
+             allowEdit : true
          };
 
          this._CAMERA.getPicture(cameraOptions)

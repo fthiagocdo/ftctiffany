@@ -10,20 +10,28 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { FeaturedRecipesPage } from '../pages/featured-recipes/featured-recipes';
-import { AddRecipePage } from '../pages/add-recipe/add-recipe';
-import { ModalsPage } from '../pages/modals/modals';
+import { ShowRecipePage } from '../pages/show-recipe/show-recipe';
+import { FavoriteRecipesPage } from '../pages/favorite-recipes/favorite-recipes';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Facebook } from '@ionic-native/facebook';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
+import { IonicImageLoader } from 'ionic-image-loader';
+
 import { AuthService } from '../providers/auth/auth-service';
-import { RecipeService } from '../providers/recipe-service/recipe-service';
 import { Utils } from '../providers/utils/utils';
 import { ImageProvider } from '../providers/image/image';
 import { PreloaderProvider } from '../providers/preloader/preloader';
 import { DatabaseProvider } from '../providers/database/database';
+import { MyRecipesPage } from '../pages/my-recipes/my-recipes';
+import { EditFieldPage } from '../pages/edit-field/edit-field';
+import { AddEditRecipePage } from '../pages/add-edit-recipe/add-edit-recipe';
+import { SearchRecipePage } from '../pages/search-recipe/search-recipe';
+import { SearchRecipeResultsPage } from '../pages/search-recipe-results/search-recipe-results';
+import { CategoryProvider } from '../providers/category/category';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDSV0S6hd_L1cZxQYggB6XNSS-MSkcNqHc",
@@ -40,8 +48,13 @@ const firebaseConfig = {
     MyApp,
     LoginPage,
     FeaturedRecipesPage,
-    AddRecipePage,
-    ModalsPage
+    ShowRecipePage,
+    FavoriteRecipesPage,
+    MyRecipesPage,
+    EditFieldPage,
+    AddEditRecipePage,
+    SearchRecipePage,
+    SearchRecipeResultsPage,
   ],
   imports: [
     BrowserModule,
@@ -49,29 +62,36 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    IonicImageLoader.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     LoginPage,
     FeaturedRecipesPage,
-    AddRecipePage,
-    ModalsPage
+    ShowRecipePage,
+    FavoriteRecipesPage,
+    MyRecipesPage,
+    EditFieldPage,
+    AddEditRecipePage,
+    SearchRecipePage,
+    SearchRecipeResultsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService,
-    RecipeService,
-    Utils,
     GooglePlus,
+    Facebook,
     ImagePicker,
     Camera,
+    AuthService,
+    Utils,
     ImageProvider,
     PreloaderProvider,
-    DatabaseProvider
+    DatabaseProvider,
+    CategoryProvider
   ]
 })
 export class AppModule {}
