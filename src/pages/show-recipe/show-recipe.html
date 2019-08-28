@@ -5,24 +5,29 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <img-loader src="{{ photo }}"></img-loader>
-    <ion-card-content>
-      <ion-card-title>
-        <b class="ftc-primary-color">{{ name }}</b>
-        <div class="ftc-divider"></div>
-      </ion-card-title>
-      <p><b>Ingredientes:</b></p>
-      <p *ngFor="let item of ingredients">{{ item }}</p>
-      <div class="ftc-divider-item"></div>
-      <p><b>- Preparo -</b></p>
-      <p><b>Tempo:</b> {{ recipeDuration }}</p>
-      <p><b>Instruções:</b></p>
-      <div [innerHTML]="recipeInstructions"></div>
-      <div class="ftc-divider-item"></div>
-      <p><b>Rendimento:</b> {{ portions }}</p>
-      <p><b>Categorias: </b>{{ UTILS.buildStringCategories(categories) }}</p>
-    </ion-card-content>
+  <img src="{{ photo }}"/>
+  <div class="ftc-recipe-content" style="text-align: justify;">
+    <b class="ftc-primary-color ftc-title">{{ name }}</b>
+    <div class="ftc-divider"></div>
+    <div style="padding: 5px 0px 0px 0px;">
+      <button ion-button round small *ngFor="let category of UTILS.buildListCategories(categories)" (click)="searchCategory()">{{ category }}</button>
+    </div>
+    <ion-grid style="padding: 10px 0px 10px 0px; font-size: 2rem">
+      <ion-row>
+        <ion-col style="padding: 0px 0px 0px 0px; text-align: start;"><b>Ingredientes</b></ion-col>
+        <ion-col style="padding: 0px 0px 0px 0px; text-align: end;"><b>{{ portions }}</b></ion-col>
+      </ion-row>
+    </ion-grid>
+    <p *ngFor="let item of ingredients" style="margin: 0px 10px 10px 10px;">{{ item }}</p>
+    <div class="ftc-divider-item"></div>
+    <ion-grid style="padding: 10px 0px 10px 0px; font-size: 2rem">
+      <ion-row>
+        <ion-col style="padding: 0px 0px 0px 0px; text-align: start;"><b>Instruções</b></ion-col>
+        <ion-col style="padding: 0px 0px 0px 0px; text-align: end;"><b>{{ recipeDuration }}</b></ion-col>
+      </ion-row>
+    </ion-grid>
+    <div [innerHTML]="recipeInstructions" style="padding: 0px 10px 10px 10px;"></div>
+    <div class="ftc-divider-item"></div>
     <div style="text-align: center;">
       <ng-template [ngIf]="!UTILS.isEmpty(favoriteRecipeId)" [ngIfElse]="notFavorite">
         <button ion-button icon-start clear small (click)="deleteFromFavorites()">
@@ -37,6 +42,6 @@
         </button>
       </ng-template>
     </div>
- </ion-card>
+  </div>
 </ion-content>
 

@@ -7,17 +7,22 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div padding class="ftc-panel">
-    <ion-img src="/assets/imgs/logo.png" class="ftc-logo ftc-center"></ion-img>
-    <div class="ftc-divider"></div>
-    <button ion-button icon-start full class="ftc-button-login" color="facebook" (click)="loginFacebook()">
-      <ion-icon name="logo-facebook"></ion-icon>
-      Facebook
-    </button>
-    <button ion-button icon-start full class="ftc-button-login" color="google" (click)="loginGoogle()">
-      <ion-icon name="logo-googleplus"></ion-icon>
-      Google
-    </button>
-  </div>
+<ion-content>
+  <h1 style="margin-right: 10px; margin-left: 60px;">Olá, visitante!</h1>
+  <p style="margin-right: 10px; margin-left: 60px;"><b>Por favor, escolha uma das opções abaixo para se conectar.</b></p>
+
+  <button ion-button icon-start full color="facebook" class="ftc-login-button" (click)="loginFacebook()">
+    <ion-icon name="logo-facebook" margin-right></ion-icon>
+    Facebook
+  </button>
+
+  <button ion-button icon-start full color="google" class="ftc-login-button" (click)="loginGoogle()">
+    <ion-icon name="logo-google" margin-right></ion-icon>
+    Google
+  </button>
+
+  <button ion-button icon-start full color="login" class="ftc-login-button" (click)="loginMail()">
+    <ion-icon name="log-in" margin-right></ion-icon>
+    E-mail/Senha
+  </button>
 </ion-content>

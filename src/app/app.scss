@@ -4,7 +4,6 @@
 
 .ftc-panel{
     background: white;
-    padding: 30px 30px 30px 30px;
 }
 
 .ftc-center {
@@ -26,11 +25,11 @@
 }
 
 .ftc-primary-color {
-    color: #cf1717 !important;
+    color: #4E7B02 !important;
 }
 
 .ftc-info-color{
-    color: #cf1717 !important;
+    color: #4E7B02 !important;
 }
 
 .ftc-error-color{
@@ -40,7 +39,7 @@
 .ftc-divider{
     height: 2px;
     overflow: hidden;
-    background-color: #cf1717;
+    background-color: #4E7B02;
 }
 
 .ftc-divider-item{
@@ -58,24 +57,28 @@
 }
 
 .ftc-checkbox .checkbox-icon {
-    border-color: #cf1717 !important;
+    border-color: #4E7B02 !important;
 }
 
 .ftc-checkbox .item-inner {
-    color: #cf1717;
+    color: #4E7B02;
     font-weight: bold;
     border-bottom: 0px !important;
 }
 
 /** Toogle Menu **/
 .ftc-header-degrade{
-    background: linear-gradient(90deg, #cf1717 0%, #fac8c8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: #1f4e00; /* Old browsers */
+    background: -moz-linear-gradient(left,  #1f4e00 0%, #4d7a00 34%, #9ac944 70%, #c7f7a5 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  #1f4e00 0%,#4d7a00 34%,#9ac944 70%,#c7f7a5 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  #1f4e00 0%,#4d7a00 34%,#9ac944 70%,#c7f7a5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f4e00', endColorstr='#c7f7a5',GradientType=1 ); /* IE6-9 */
     color: white;
     font-size: 20px;
 }
 
 .ftc-menu-item {
-    color: #cf1717;
+    color: #4E7B02;
     font-weight: bold;
 }
 
@@ -89,4 +92,22 @@
     border-radius: 50%;
 }
 
-/***************************************************/
+.ftc-input-text {
+    padding: 20px 30px 20px 30px;
+}
+
+.ftc-input-text .item-inner {
+    border: 0px !important;
+    border-radius: 10px !important;
+    -webkit-box-shadow: 0px 10px 13px -7px #4E7B02, 11px 24px 15px -3px rgba(26,113,178,0) !important;
+    box-shadow: 0px 10px 13px -7px #4E7B02, 11px 24px 15px -3px rgba(26,113,178,0) !important;
+}
+
+.ftc-input-text .text-input {
+    color: #4E7B02;
+    margin-left: 20px;
+}
+
+.swiper-wrapper {
+    padding-left: 5px;
+}

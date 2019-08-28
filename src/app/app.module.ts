@@ -12,6 +12,12 @@ import { LoginPage } from '../pages/login/login';
 import { FeaturedRecipesPage } from '../pages/featured-recipes/featured-recipes';
 import { ShowRecipePage } from '../pages/show-recipe/show-recipe';
 import { FavoriteRecipesPage } from '../pages/favorite-recipes/favorite-recipes';
+import { HomePage } from '../pages/home/home';
+import { MyRecipesPage } from '../pages/my-recipes/my-recipes';
+import { EditFieldPage } from '../pages/edit-field/edit-field';
+import { AddEditRecipePage } from '../pages/add-edit-recipe/add-edit-recipe';
+import { SearchRecipePage } from '../pages/search-recipe/search-recipe';
+import { SearchRecipeResultsPage } from '../pages/search-recipe-results/search-recipe-results';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,11 +32,6 @@ import { Utils } from '../providers/utils/utils';
 import { ImageProvider } from '../providers/image/image';
 import { PreloaderProvider } from '../providers/preloader/preloader';
 import { DatabaseProvider } from '../providers/database/database';
-import { MyRecipesPage } from '../pages/my-recipes/my-recipes';
-import { EditFieldPage } from '../pages/edit-field/edit-field';
-import { AddEditRecipePage } from '../pages/add-edit-recipe/add-edit-recipe';
-import { SearchRecipePage } from '../pages/search-recipe/search-recipe';
-import { SearchRecipeResultsPage } from '../pages/search-recipe-results/search-recipe-results';
 import { CategoryProvider } from '../providers/category/category';
 
 const firebaseConfig = {
@@ -55,6 +56,7 @@ const firebaseConfig = {
     AddEditRecipePage,
     SearchRecipePage,
     SearchRecipeResultsPage,
+    HomePage,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +79,7 @@ const firebaseConfig = {
     AddEditRecipePage,
     SearchRecipePage,
     SearchRecipeResultsPage,
+    HomePage,
   ],
   providers: [
     StatusBar,

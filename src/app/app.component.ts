@@ -16,6 +16,7 @@ import { MyRecipesPage } from '../pages/my-recipes/my-recipes';
 import { SearchRecipePage } from '../pages/search-recipe/search-recipe';
 import { DatabaseProvider } from '../providers/database/database';
 import { CategoryProvider } from '../providers/category/category';
+import { HomePage } from '../pages/home/home';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDSV0S6hd_L1cZxQYggB6XNSS-MSkcNqHc",
@@ -33,7 +34,7 @@ export const firebaseConfig = {
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  private rootPage: any = LoginPage;
+  private rootPage: any = HomePage;
   private pagesGuest: Array<{title: string, icon: string, component: any}>;
   private pagesUser: Array<{title: string, icon: string, component: any}>;
   private email = 'tiffanydatabase@mail.com';
@@ -72,22 +73,21 @@ export class MyApp {
         _class.UTILS.showMessage('Não foi possível se conectar ao banco de dados. Por favor, tente novamente mais tarde...', 'error');
       });
     this.pagesGuest = [
-      { title: 'Procurar receitas', icon: 'search', component: SearchRecipePage },
-      { title: 'Receitas em destaque', icon: 'star', component: FeaturedRecipesPage  },
+      { title: 'Home', icon: 'home', component: HomePage },
+      { title: 'Procurar', icon: 'search', component: SearchRecipePage },
       { title: 'Login', icon: 'log-in', component: LoginPage  }
     ];
     this.pagesUser = [
-      { title: 'Procurar receitas', icon: 'search', component: SearchRecipePage },
-      { title: 'Receitas favoritas', icon: 'heart', component: FavoriteRecipesPage },
-      { title: 'Minhas receitas', icon: 'list-box', component: MyRecipesPage },
-      { title: 'Receitas em destaque', icon: 'star', component: FeaturedRecipesPage },
+      { title: 'Home', icon: 'home', component: HomePage },
+      { title: 'Procurar', icon: 'search', component: SearchRecipePage },
+      { title: 'Favoritas', icon: 'heart', component: FavoriteRecipesPage },
       { title: 'Sair', icon: 'log-out', component: LoginPage  }
     ];
   }
 
   initializeApp() {
     this.PLATFORM.ready().then(() => {
-      this.STATUSBAR.backgroundColorByHexString('#cf1717');
+      this.STATUSBAR.backgroundColorByHexString('#1f4e00');
       this.SPLASHSCREEN.hide();
       this.IMGLOADERCONFIG.enableSpinner(true);
       this.IMGLOADERCONFIG.useImageTag(true);

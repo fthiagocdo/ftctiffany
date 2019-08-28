@@ -12,7 +12,7 @@ export class PreloaderProvider {
    displayPreloader() : void {
       if(this.loading == null){
          this.loading = this.loadingCtrl.create({
-            content: 'Please wait...'
+            content: 'Por favor, aguarde...'
          });
    
          this.loading.present();
