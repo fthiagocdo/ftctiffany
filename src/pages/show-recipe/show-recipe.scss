@@ -1,8 +1,32 @@
 page-show-recipe {
     .ftc-recipe-content {
         padding: 5px 10px 5px 10px;
+        text-align: justify;
     }
-    .ftc-title {
+    .ftc-recipe-content-title {
+        font-weight: bold;
+        font-size: 3.3rem !important; 
+    }
+
+    .ftc-recipe-content-bold-text {
+        padding: 10px 0px 10px 0px; 
         font-size: 2.5rem;
+    }
+
+    .ftc-recipe-content-bold-text .col {
+        padding: 0px 0px 0px 0px; 
+    }
+
+    .ftc-recipe-content-normal-text {
+        margin: 0px 0px 10px 0px;
+        padding: 0px 10px 0px 10px;
+    }
+
+    .ftc-recipe-content-categories{
+        text-align: center; padding: 5px 0px 0px 0px;
+    }
+
+    .ftc-recipe-content-categories .button-round {
+        padding: 0 1rem;
     }
 }

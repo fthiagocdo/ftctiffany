@@ -3,51 +3,51 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title class="ftc-stylized-font ftc-header-title">Home</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-item class="ftc-input-text">
-    <ion-input [(ngModel)]="oportunityType" placeholder="O que iremos cozinhar hoje?"></ion-input>
+    <ion-input [(ngModel)]="searchRecipeKeys" placeholder="O que iremos cozinhar hoje?"></ion-input>
     <button ion-button clear margin-bottom type="button" item-right (click)="search()">
       <ion-icon name="search"></ion-icon>
     </button>
   </ion-item>
-  <h2 style="padding: 0px 0px 0px 10px; margin: 0px;"><b>Recomendadas</b></h2>
+  <h2 style="padding: 0px 0px 0px 10px; margin: 0px; font-size: 4rem;" class="ftc-stylized-font"><b>Recomendadas</b></h2>
   <div class="ftc-panel">
     <ion-slides centeredSlides="true" slidesPerView="1.1" spaceBetween="-15">
       <ion-slide *ngFor="let item of recipes">
-        <ion-card style="height: 350px; margin-bottom: 20px;" (click)="goToRecipe(item)">
+        <ion-card class="ftc-card-image" (click)="goToRecipe(item)">
           <img-loader src="{{ item.photo }}"></img-loader>
 
-          <ion-card-title style="text-align: left; padding: 10px 10px 0px 10px;">
+          <ion-card-title class="ftc-card-title ftc-stylized-font">
             <b class="ftc-primary-color">{{ item.name }}</b>
             <div class="ftc-divider"></div>
           </ion-card-title>
 
-          <ion-card-content style="padding: 5px 10px 0px 10px;">
-            <p>Descrição breve da oportunidade. Se for maior do que uma certa quantidade de caracteres, a mesma será truncada e o resto poderá...</p>
+          <ion-card-content class="ftc-card-content">
+            <p>{{ item.description }}</p>
           </ion-card-content> 
         </ion-card>
       </ion-slide>
     </ion-slides>
   </div>
 
-  <h2 style="padding: 10px 0px 0px 10px; margin: 0px;"><b>Recentes</b></h2>
+  <h2 style="padding: 10px 0px 0px 10px; margin: 0px; font-size: 4rem;" class="ftc-stylized-font"><b>Recentes</b></h2>
   <div class="ftc-panel">
     <ion-slides centeredSlides="true" slidesPerView="1.1" spaceBetween="-15">
       <ion-slide *ngFor="let item of recipes">
-        <ion-card style="height: 350px; margin-bottom: 20px;">
+        <ion-card class="ftc-card-image">
           <img-loader src="{{ item.photo }}"></img-loader>
 
-          <ion-card-title style="text-align: left; padding: 10px 10px 0px 10px;">
+          <ion-card-title class="ftc-card-title ftc-stylized-font">
             <b class="ftc-primary-color">{{ item.name }}</b>
             <div class="ftc-divider"></div>
           </ion-card-title>
 
-          <ion-card-content style="padding: 5px 10px 0px 10px;">
-            <p>Descrição breve da oportunidade. Se for maior do que uma certa quantidade de caracteres, a mesma será truncada e o resto poderá...</p>
+          <ion-card-content class="ftc-card-content">
+            <p>{{ item.description }}</p>
           </ion-card-content> 
         </ion-card>
       </ion-slide>

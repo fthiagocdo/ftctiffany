@@ -1,24 +1,23 @@
 <ion-menu [content]="content">
   <ion-header class="ftc-header-degrade">
     <ng-template [ngIf]="currentUser.isLogged" [ngIfElse]="guest_header">
-      <ion-grid>
-        <ion-row padding-top padding-left>
-          <img src="{{ currentUser.photo }}" width="100px" height="100px" class="ftc-circle-pic"/>
-        </ion-row>
-        <ion-row padding>
-            <ng-template [ngIf]="currentUser.name != ''" [ngIfElse]="showEmail">
-              <b>{{ currentUser.name }}</b>
-            </ng-template>
-            <ng-template #showEmail>
-                <b>{{ currentUser.email }}</b>
-            </ng-template>
-        </ion-row>
-      </ion-grid>
+      <ion-row padding-top padding-left>
+        <img src="{{ currentUser.photo }}" width="100px" height="100px" class="ftc-circle-pic"/>
+      </ion-row>
+      <ion-row>
+          <ng-template [ngIf]="currentUser.name != ''" [ngIfElse]="showEmail">
+            <p class="ftc-stylized-font ftc-font-menu ftc-header-title-first-line"><b>{{ currentUser.name }}</b></p>
+            <p class="ftc-header-title-second-line"><b>{{ currentUser.email }}</b></p>
+          </ng-template>
+          <ng-template #showEmail>
+            <p><b>{{ currentUser.email }}</b></p>
+          </ng-template>
+      </ion-row>
     </ng-template>
     <ng-template #guest_header>
       <ion-grid>
-        <ion-row padding>
-          <b>Receita Fácil</b>
+        <ion-row padding class="ftc-stylized-font ftc-font-menu">
+          <p class="ftc-stylized-font ftc-font-menu ftc-header-title-first-line"><b>Cookn</b></p>
         </ion-row>
       </ion-grid>
     </ng-template>
@@ -27,13 +26,13 @@
   <ion-content style="background: white">
     <ion-list>
       <ng-template [ngIf]="currentUser.isLogged" [ngIfElse]="guest_content">
-        <button class="ftc-menu-item" menuClose ion-item *ngFor="let p of pagesUser" (click)="openPage(p)">
+        <button class="ftc-menu-item ftc-stylized-font ftc-font-menu" menuClose ion-item *ngFor="let p of pagesUser" (click)="openPage(p)">
           <ion-icon [name]="p.icon" item-start></ion-icon>
           {{p.title}}
         </button>
       </ng-template>
       <ng-template #guest_content>
-          <button class="ftc-menu-item" menuClose ion-item *ngFor="let p of pagesGuest" (click)="openPage(p)">
+          <button class="ftc-menu-item ftc-stylized-font ftc-font-menu" menuClose ion-item *ngFor="let p of pagesGuest" (click)="openPage(p)">
               <ion-icon [name]="p.icon" item-start></ion-icon>
               {{p.title}}
             </button>

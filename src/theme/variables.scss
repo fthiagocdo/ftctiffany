@@ -88,3 +88,11 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+@font-face {
+  font-family: 'rancho-regular';
+  src: url('../assets/fonts/Rancho-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+
+}

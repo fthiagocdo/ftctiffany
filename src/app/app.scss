@@ -1,3 +1,32 @@
+.ftc-stylized-font {
+    font-family: "rancho-regular" !important;
+    font-weight: normal;
+}
+
+.ftc-font-menu {
+    font-size: 3rem !important;
+}
+
+.toolbar-title {
+    font-size: 3rem !important;
+}
+
+.ftc-card-image {
+    height: 350px; 
+    margin-bottom: 20px;
+}
+
+.ftc-card-title {
+    font-size: 3.3rem !important;
+    text-align: justify; 
+    padding: 10px 10px 0px 10px;
+}
+
+.ftc-card-content {
+    padding: 5px 10px 0px 10px;
+    text-align: justify;
+}
+
 .content{
     background: #ffffff;
 }
@@ -75,6 +104,16 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f4e00', endColorstr='#c7f7a5',GradientType=1 ); /* IE6-9 */
     color: white;
     font-size: 20px;
+}
+
+.ftc-header-title-first-line {
+    width: 100%; 
+    margin: 0px 0px 0px 15px;
+}
+
+.ftc-header-title-second-line {
+    margin: 0px 0px 10px 15px; 
+    font-size: 1.5rem; 
 }
 
 .ftc-menu-item {
