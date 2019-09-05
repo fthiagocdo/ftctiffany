@@ -3,13 +3,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Login</ion-title>
+    <ion-title class="ftc-stylized-font ftc-header-title">Login</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <h1 style="margin-right: 10px; margin-left: 60px;">Olá, visitante!</h1>
-  <p style="margin-right: 10px; margin-left: 60px;"><b>Por favor, escolha uma das opções abaixo para se conectar.</b></p>
+  <h1 class="ftc-login-text ftc-login-text-first-line ftc-stylized-font"><b>Olá, visitante!</b></h1>
+  <p class="ftc-login-text"><b>Por favor, escolha uma das opções abaixo para se conectar.</b></p>
 
   <button ion-button icon-start full color="facebook" class="ftc-login-button" (click)="loginFacebook()">
     <ion-icon name="logo-facebook" margin-right></ion-icon>
@@ -21,8 +21,12 @@
     Google
   </button>
 
-  <button ion-button icon-start full color="login" class="ftc-login-button" (click)="loginMail()">
+  <button ion-button icon-start full color="login" class="ftc-login-button" (click)="openModalLogin()">
     <ion-icon name="log-in" margin-right></ion-icon>
     E-mail/Senha
   </button>
+
+  <button ion-button small clear float-left (click)="openModalSignup()" style="margin-left: 50px;">Cadastre-se</button>
+
+  <button ion-button small clear float-right (click)="openModalRecoverPassword()" style="padding-right: 5px;">Resetar Senha</button>
 </ion-content>

@@ -12,6 +12,48 @@ export class DatabaseProvider {
       private UTILS: Utils,
    ) { }
 
+   getUser(userUid) : Promise<any> {
+      return new Promise((resolve, reject) => {
+         firebase.firestore().collection('users').doc(userUid).collection('profile').get()
+            .then( success => {
+               let user : any;
+
+               success.forEach((item) => {
+                  user = {
+                     uid: userUid,
+                     photo: item.data().photo,
+                     name: item.data().name,
+                     email: item.data().email,
+                  }
+               });
+
+               resolve(user);
+         }, err => {
+            reject(err);
+            console.log("Promise error: ", err);
+            console.dir(err);
+         });
+      });
+   }
+
+   addUser(email, name, photo, userUid) : Promise<any> {
+      return new Promise((resolve, reject) => {
+         firebase.firestore().collection('users').doc(userUid).collection('profile')
+            .add({
+               email: email,
+               name: name,
+               photo: photo,
+               timestamp: firebase.firestore.FieldValue.serverTimestamp()
+               }).then(success => {
+                  resolve(true);
+               }, err => {
+                  reject(false);
+                  console.log("Promise error: ", err);
+                  console.dir(err);
+               });
+      });
+   }
+
    getRecipes() : Promise<any> {
       return new Promise((resolve, reject) => {
          firebase.firestore().collection('recipes').get()
@@ -389,7 +431,7 @@ export class DatabaseProvider {
 
          Promise.all([addToFavoritePromise])
             .then(success => {
-               resolve(success[1]);
+               resolve(success[0]);
             }, err => {
                reject('');
                console.log("Promise error: ", err);

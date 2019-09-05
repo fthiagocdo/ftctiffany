@@ -8,16 +8,16 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { FeaturedRecipesPage } from '../pages/featured-recipes/featured-recipes';
+import { SignupPage } from '../pages/signup/signup';
+import { LoginMailPage } from '../pages/login-mail/login-mail';
+import { RecoverPasswordPage } from '../pages/recover-password/recover-password';
 import { ShowRecipePage } from '../pages/show-recipe/show-recipe';
 import { FavoriteRecipesPage } from '../pages/favorite-recipes/favorite-recipes';
-import { HomePage } from '../pages/home/home';
-import { MyRecipesPage } from '../pages/my-recipes/my-recipes';
-import { EditFieldPage } from '../pages/edit-field/edit-field';
-import { AddEditRecipePage } from '../pages/add-edit-recipe/add-edit-recipe';
 import { SearchRecipePage } from '../pages/search-recipe/search-recipe';
 import { SearchRecipeResultsPage } from '../pages/search-recipe-results/search-recipe-results';
+import { EditFieldPage } from '../pages/edit-field/edit-field';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -47,16 +47,16 @@ const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
+    HomePage,
     LoginPage,
-    FeaturedRecipesPage,
+    LoginMailPage,
+    SignupPage,
+    RecoverPasswordPage,
     ShowRecipePage,
     FavoriteRecipesPage,
-    MyRecipesPage,
-    EditFieldPage,
-    AddEditRecipePage,
     SearchRecipePage,
     SearchRecipeResultsPage,
-    HomePage,
+    EditFieldPage,
   ],
   imports: [
     BrowserModule,
@@ -70,16 +70,17 @@ const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    HomePage,
     LoginPage,
-    FeaturedRecipesPage,
+    LoginMailPage,
+    SignupPage,
+    RecoverPasswordPage,
     ShowRecipePage,
     FavoriteRecipesPage,
-    MyRecipesPage,
-    EditFieldPage,
-    AddEditRecipePage,
     SearchRecipePage,
     SearchRecipeResultsPage,
-    HomePage,
+    EditFieldPage,
+    
   ],
   providers: [
     StatusBar,

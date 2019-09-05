@@ -24,7 +24,8 @@ export class ShowRecipePage {
   private ingredients: string[] = new Array();
   private categories: string[] = new Array();
   private portions: string = '';
-  private favoriteRecipeId: string = '';
+  private favoriteRecipes: any[] = [];
+  private favoriteRecipeId: string;
 
   constructor(
     private NAVPARAMS: NavParams,
@@ -41,7 +42,6 @@ export class ShowRecipePage {
   }
 
   loadData() {
-    this.favoriteRecipeId = this.NAVPARAMS.get('favoriteRecipeId');
     this.recipe = this.NAVPARAMS.get('recipe');
     
     this.id = this.recipe.id;
@@ -55,7 +55,25 @@ export class ShowRecipePage {
     this.portions = this.recipe.portions;
     this.categories = this.recipe.categories;
 
-    this.LOADER.hidePreloader();
+    if(this.currentUser.isLogged) {
+      this.getFavoriteRecipes();
+    } else {
+      this.LOADER.hidePreloader();
+    }
+  }
+
+  getFavoriteRecipes() {
+    let _class = this;
+    this.DB.getFavoriteRecipes(this.currentUser.uid)
+      .then(success => {
+        _class.favoriteRecipes = success;
+        _class.favoriteRecipeId = _class.getFavoriteRecipeId(_class.recipe.id);
+        _class.LOADER.hidePreloader();
+      }, err => {
+        console.log(err);
+        _class.UTILS.showMessage("Não foi possível completar a requisição. Por favor, tente novamente mais tarde...", 'error');
+        _class.LOADER.hidePreloader();
+      });
   }
 
   addToFavorites() {
@@ -63,6 +81,7 @@ export class ShowRecipePage {
       let _class = this;
       this.LOADER.displayPreloader();
 
+      //insert recipe.id and returns a favoriteRecipeId
       this.DB.addToFavorites(this.currentUser.uid, this.recipe.id)
         .then(success => {
           _class.favoriteRecipeId = success;
@@ -80,10 +99,10 @@ export class ShowRecipePage {
       let _class = this;
       this.LOADER.displayPreloader();
 
-      
+      //search for the favoriteRecipeId
       this.DB.deleteFromFavorites(this.currentUser.uid, this.favoriteRecipeId)
         .then(success => {
-          _class.favoriteRecipeId = '';
+          _class.favoriteRecipeId = null;
           _class.LOADER.hidePreloader();
         }, err => {
           console.log(err);
@@ -93,6 +112,14 @@ export class ShowRecipePage {
     }
   }
 
-  
+  getFavoriteRecipeId(recipeId) : string {
+    let favoriteRecipe = this.favoriteRecipes.find(favoriteRecipe => recipeId == favoriteRecipe.recipeId);
+
+    if(favoriteRecipe != null) {
+      return favoriteRecipe.id;
+    } else {
+      return null;
+    }
+  }
 
 }

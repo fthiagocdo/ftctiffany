@@ -1,0 +1,23 @@
+<div class="modal-wrapper">
+</div>
+<ion-content>
+  <ion-item class="ftc-input-text" style="padding: 0px 5px 20px 5px;" *ngIf="!isResendEmailValidation">
+    <ion-input type="email" maxlength="100" [(ngModel)]="email" placeholder="E-mail"></ion-input>
+  </ion-item>
+
+  <ion-item class="ftc-input-text" style="padding: 0px 5px 20px 5px;" *ngIf="!isResendEmailValidation">
+    <ion-input type="password" maxlength="20" [(ngModel)]="password" placeholder="Senha"></ion-input>
+  </ion-item>
+
+  <div style="padding: 0px 3px 0px 3px;" *ngIf="!isResendEmailValidation">
+    <button ion-button full round (click)="confirm()" class="ftc-center">Conecte-se</button>
+  </div>
+
+  <div *ngIf="isResendEmailValidation" style="padding: 0px 10px 10px 10px; text-align: justify;">
+    Seu cadastro ainda não foi validado. Por favor, acesse sua caixa de e-mails para validar seu cadastro ou reenvie o e-mail de validação.
+  </div>
+
+  <div style="padding: 0px 3px 0px 3px;" *ngIf="isResendEmailValidation">
+    <button ion-button full round (click)="resendEmailValidation()" class="ftc-center">Reenviar E-mail de Validação</button>
+  </div>
+</ion-content>

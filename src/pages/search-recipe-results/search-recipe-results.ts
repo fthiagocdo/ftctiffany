@@ -44,7 +44,9 @@ export class SearchRecipeResultsPage {
       this.isListEmpty = false;
     }
 
-    if(!this.UTILS.isEmpty(_class.currentUser.uid)){
+    this.LOADER.hidePreloader();
+
+    /*if(!this.UTILS.isEmpty(_class.currentUser.uid)){
       this.DB.getFavoriteRecipes(this.currentUser.uid)
         .then(success => {
           _class.favoriteRecipes = success;
@@ -56,7 +58,7 @@ export class SearchRecipeResultsPage {
         });
     } else {
       this.LOADER.hidePreloader();
-    }    
+    } */   
   }
 
   addToFavorites(recipeId) {

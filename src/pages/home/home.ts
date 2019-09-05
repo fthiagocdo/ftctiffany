@@ -6,6 +6,8 @@ import { DatabaseProvider } from '../../providers/database/database';
 import { ShowRecipePage } from '../show-recipe/show-recipe';
 import { AuthService } from '../../providers/auth/auth-service';
 import { Utils } from '../../providers/utils/utils';
+import { SearchRecipeResultsPage } from '../search-recipe-results/search-recipe-results';
+import * as _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -16,6 +18,7 @@ export class HomePage {
   private currentUser: any;
   private recipes: any;
   private favoriteRecipes: any[] = [];
+  private searchRecipeKeys: string;
 
   constructor(
     private NAVCTRL: NavController,
@@ -28,7 +31,7 @@ export class HomePage {
       });
   }
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     this.LOADER.displayPreloader();
     this.renderRecipes();
   }
@@ -57,6 +60,35 @@ export class HomePage {
         _class.UTILS.showMessage("Não foi possível completar a requisição. Por favor, tente novamente mais tarde...", 'error');
         _class.LOADER.hidePreloader();
       });
+  }
+
+  search() {
+    this.LOADER.displayPreloader();
+    let _class = this;
+    let promises = [];
+
+    if(this.searchRecipeKeys.length > 0) {
+      this.searchRecipeKeys.split(' ').forEach(ingredient => {
+        promises.push(this.DB.searchRecipesByIndex(ingredient));  
+      });
+    }
+    
+    if(promises.length > 0) {
+      Promise.all(promises)
+        .then(success => {
+          let result = _.intersectionBy(...success, 'id');
+          _class.NAVCTRL.push(SearchRecipeResultsPage, {
+            recipeSearchResults: result
+          });
+        }, err => {
+          console.log(err);
+          _class.UTILS.showMessage('Não foi possível completar a requisição. Por favor, tente novamente mais tarde...', 'error');
+          _class.LOADER.hidePreloader();
+        });
+    } else {
+      _class.UTILS.showMessage('Informe pelo menos um filtro para realizar a consulta.', 'error');
+      _class.LOADER.hidePreloader();
+    }
   }
 
   goToRecipe(item) {

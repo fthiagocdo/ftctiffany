@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Resultado da pesquisa</ion-title>
+    <ion-title class="ftc-stylized-font ftc-header-title">Resultado da pesquisa</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -10,43 +10,18 @@
       <p class="primary-color bold" style="text-align: center;">Nenhuma receita encontrada.</p>
     </ion-card-content>
   </ion-card>
-  <ion-card *ngFor="let item of recipes">
+  <ion-card *ngFor="let item of recipes" class="ftc-card-image" (click)="goToRecipe(item)">
     <div *ngIf="currentUser.uid != item.userUid">
       <img-loader src="{{ item.photo }}"></img-loader>
-      <ion-card-content>
-        <ion-card-title>
-          <b class="ftc-primary-color">{{ item.name }}</b>
-          <div class="ftc-divider"></div>
-        </ion-card-title>
+
+      <ion-card-title class="ftc-card-title ftc-stylized-font">
+        <b class="ftc-primary-color">{{ item.name }}</b>
+        <div class="ftc-divider"></div>
+      </ion-card-title>
+
+      <ion-card-content class="ftc-card-content">
         <p>{{ item.description }}</p>
-        <p><b>Tempo de preparo:</b> {{ item.recipeDuration }}</p>
-        <p *ngIf="item.pre">Esta receita possui pré-preparo.</p>
-        <p><b>Categorias: </b>{{ UTILS.buildStringCategories(item.categories) }}</p>
-      </ion-card-content>
-      <div style="text-align: center;">
-        <ion-row>
-          <ion-col>
-            <button ion-button icon-start clear small (click)="goToRecipe(item)">
-              <ion-icon name="eye"></ion-icon>
-              <div>Ver receita</div>
-            </button>
-          </ion-col>
-          <ion-col>
-            <ng-template [ngIf]="getFavoriteRecipeId(item.id) != null" [ngIfElse]="notFavorite">
-              <button ion-button icon-start clear small (click)="deleteFromFavorites(item.id)">
-                <ion-icon name="heart"></ion-icon>
-                <div>Remover favoritos</div>
-              </button>
-            </ng-template>
-            <ng-template #notFavorite>
-              <button ion-button icon-start clear small (click)="addToFavorites(item.id)">
-                <ion-icon name="heart-outline"></ion-icon>
-                <div>Adicionar favoritos</div>
-              </button>
-            </ng-template>
-          </ion-col>
-        </ion-row>
-      </div>
+      </ion-card-content> 
     </div>
- </ion-card>
+  </ion-card>
 </ion-content>

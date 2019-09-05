@@ -15,7 +15,7 @@
     <ion-grid class="ftc-recipe-content-bold-text ftc-stylized-font">
       <ion-row>
         <ion-col style="text-align: start;"><b>Ingredientes</b></ion-col>
-        <ion-col style="text-align: end;"><b>{{ portions }}</b></ion-col>
+        <ion-col style="text-align: end;"><ion-icon name="people"></ion-icon><b>{{ portions }}</b></ion-col>
       </ion-row>
     </ion-grid>
     <p *ngFor="let item of ingredients" class="ftc-recipe-content-normal-text">{{ item }}</p>
@@ -23,7 +23,7 @@
     <ion-grid class="ftc-recipe-content-bold-text ftc-stylized-font">
       <ion-row>
         <ion-col style="text-align: start;"><b>Instruções</b></ion-col>
-        <ion-col style="text-align: end;"><b>{{ recipeDuration }}</b></ion-col>
+        <ion-col style="text-align: end;"><ion-icon name="clock"></ion-icon><b>{{ recipeDuration }}</b></ion-col>
       </ion-row>
     </ion-grid>
     <div [innerHTML]="recipeInstructions" class="ftc-recipe-content-normal-text"></div>

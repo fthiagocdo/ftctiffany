@@ -12,7 +12,6 @@ import { PreloaderProvider } from '../providers/preloader/preloader';
 import { AuthService } from '../providers/auth/auth-service';
 import { Utils } from '../providers/utils/utils';
 import { ImageLoaderConfig } from 'ionic-image-loader';
-import { MyRecipesPage } from '../pages/my-recipes/my-recipes';
 import { SearchRecipePage } from '../pages/search-recipe/search-recipe';
 import { DatabaseProvider } from '../providers/database/database';
 import { CategoryProvider } from '../providers/category/category';
