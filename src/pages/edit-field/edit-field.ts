@@ -167,7 +167,7 @@ export class EditFieldPage {
     let _class = this;
     this.LOADER.displayPreloader();
 
-    this.IMG.selectImage()
+    /*this.IMG.selectImage()
       .then((data) => {
         this.DB.uploadImage(data)
          .then((snapshot : any) => {
@@ -178,7 +178,7 @@ export class EditFieldPage {
             _class.UTILS.showMessage('Não foi possível completar a requisição. Por favor, tente novamente mais tarde...', 'error');
             _class.LOADER.hidePreloader();
          });
-      });
+      });*/
    }
 
   cancel(){

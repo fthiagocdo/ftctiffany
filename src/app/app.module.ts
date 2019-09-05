@@ -23,8 +23,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from '@ionic-native/facebook';
-import { ImagePicker } from '@ionic-native/image-picker';
-import { Camera } from '@ionic-native/camera';
+//import { ImagePicker } from '@ionic-native/image-picker';
+//import { Camera } from '@ionic-native/camera';
 import { IonicImageLoader } from 'ionic-image-loader';
 
 import { AuthService } from '../providers/auth/auth-service';
@@ -88,8 +88,8 @@ const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GooglePlus,
     Facebook,
-    ImagePicker,
-    Camera,
+    //ImagePicker,
+    //Camera,
     AuthService,
     Utils,
     ImageProvider,
