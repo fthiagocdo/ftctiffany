@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+//import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 @Injectable()
@@ -8,9 +8,9 @@ export class ImageProvider {
 
    public cameraImage : String
 
-   constructor(private _CAMERA : Camera) { }
+   constructor(/*private _CAMERA : Camera*/) { }
 
-   selectImage() : Promise<any>{
+   /*selectImage() : Promise<any>{
       return new Promise(resolve => {
          let cameraOptions : CameraOptions = {
              sourceType         : this._CAMERA.PictureSourceType.PHOTOLIBRARY,
@@ -30,6 +30,8 @@ export class ImageProvider {
             resolve(this.cameraImage);
          });
       });
-   }
+   }*/
+
+   selectImage() {}
 
 }
